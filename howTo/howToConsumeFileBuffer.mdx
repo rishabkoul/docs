@@ -1,0 +1,120 @@
+---
+title: 'How to consume file buffer send by this api?'
+description: 'Consuming the File Buffer from `/api/generate-file`'
+---
+
+# Steps to Consume File Buffer
+
+To consume the file buffer sent by the `/api/generate-file` API, follow these steps:
+
+1. **Make a POST Request**: Send a POST request to the `/api/generate-file` endpoint with the necessary payload. This payload should include the HTML, CSS, and other parameters like format, width, height, etc.
+
+2. **Handle the Response**: The response from the API will be a file buffer. Depending on the `returnBase64` flag in your request, the response will either be a Base64-encoded string or a raw file buffer.
+
+3. **Download the File**: If the response is a raw file buffer, you can create a Blob from the buffer and use it to download the file. If it's a Base64 string, you can convert it back to a Blob and then download it.
+
+Here's an example of how you can handle the response in JavaScript:
+
+```javascript downloadImageFromApi.html
+<button id="downloadBtn">Download</button>
+<script>
+document
+    .getElementById("downloadBtn")
+    .addEventListener("click", async () => {
+        try {
+            const response = await fetch(
+                "https://renderbots-html-to-file-api.p.rapidapi.com/api/generate-file",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-rapidapi-host": "renderbots-html-to-file-api.p.rapidapi.com",
+                        "x-rapidapi-key": "<YOUR-RAPID-API-KEY>",
+                    },
+                    body: JSON.stringify({
+                        html: "<div>Hello World</div>",
+                        css: "div { width: 100%; height: 100%; background-color: red; display: flex; justify-content: center; align-items: center; color: white; }",
+                        format: "png",
+                        filename: "outputFile",
+                    }),
+                }
+            );
+            if (!response.ok) {
+                throw new Error("Failed to generate file");
+            }
+            const blob = await response.blob();
+            const url = URL.createObjectURL(blob);
+            // Create a link to download the file
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "outputFile.png"; // Change extension based on format
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+</script>
+```
+And here's an example of how you can handle the response in JavaScript in you get base64 string as response:
+
+```javascript downloadImageFromApiBase64.html
+<button id="downloadBtn">Download</button>
+<script>
+document
+    .getElementById("downloadBtn")
+    .addEventListener("click", async () => {
+        try {
+            const response = await fetch(
+                "https://renderbots-html-to-file-api.p.rapidapi.com/api/generate-file",
+                {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "x-rapidapi-host": "renderbots-html-to-file-api.p.rapidapi.com",
+                        "x-rapidapi-key": "<YOUR-RAPID-API-KEY>",
+                    },
+                    body: JSON.stringify({
+                        html: "<div>Hello World</div>",
+                        css: "div { width: 100%; height: 100%; background-color: red; display: flex; justify-content: center; align-items: center; color: white; }",
+                        format: "png",
+                        filename: "outputFile",
+                        returnBase64:true
+                    }),
+                }
+            );
+            if (!response.ok) {
+                throw new Error("Failed to generate file");
+            }
+            const json = await response.json();
+            const base64Response = await fetch(json.image);
+            const blob = await base64Response.blob();
+            const url = URL.createObjectURL(blob);
+            // Create a link to download the file
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "outputFile.png"; // Change extension based on format
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+        } catch (error) {
+            console.error("Error:", error);
+        }
+    });
+</script>
+```
+
+### Explanation:
+
+- **Fetch API**: The `fetch` function is used to make a POST request to the `/api/generate-file` endpoint. The request includes headers specifying the content type as JSON and a body containing the HTML, CSS, and other parameters.
+
+- **Response Handling**: After receiving the response, check if it is successful using `response.ok`. If not, throw an error.
+
+- **Blob Creation**: Use `response.blob()` to convert the response into a Blob object. This is useful for handling binary data.
+
+- **URL Creation**: Create a URL for the Blob using `URL.createObjectURL(blob)`. This URL can be used to download the file.
+
+- **Download Link**: Create an anchor (`<a>`) element, set its `href` attribute to the Blob URL, and set the `download` attribute to specify the filename. Trigger a click event on the anchor to start the download.
+
+This approach allows you to handle the file buffer sent by the API and download it as a file on the client side.
