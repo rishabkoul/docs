@@ -3,18 +3,24 @@
   "theme": "mint",
   "name": "Mint Starter Kit",
   "colors": {
-    "primary": "#16A34A",
-    "light": "#07C983",
-    "dark": "#15803D"
+    "primary": "#75B2FA",
+    "light": "#75B2FA",
+    "dark": "#75B2FA"
   },
-  "favicon": "/favicon.svg",
+  "background": {
+    "color": {
+      "light": "#061930",
+      "dark": "#061930"
+    }
+  },
+  "favicon": "/render_bot_logo_favicon.png",
   "navigation": {
     "tabs": [
       {
-        "tab": "Guides",
+        "tab": "Home",
         "groups": [
           {
-            "group": "Get Started",
+            "group": "Overview",
             "pages": [
               "introduction",
               "quickstart",
@@ -53,49 +59,27 @@
           }
         ]
       }
-    ],
-    "global": {
-      "anchors": [
-        {
-          "anchor": "Documentation",
-          "href": "https://mintlify.com/docs",
-          "icon": "book-open-cover"
-        },
-        {
-          "anchor": "Community",
-          "href": "https://mintlify.com/community",
-          "icon": "slack"
-        },
-        {
-          "anchor": "Blog",
-          "href": "https://mintlify.com/blog",
-          "icon": "newspaper"
-        }
-      ]
-    }
+    ]
   },
   "logo": {
-    "light": "/logo/light.svg",
-    "dark": "/logo/dark.svg"
+    "light": "/logo/render_bot_logo.png",
+    "dark": "/logo/render_bot_logo.png"
+  },
+  "appearance": {
+    "default": "dark",
+    "strict": true
   },
   "navbar": {
     "links": [
       {
         "label": "Support",
-        "href": "mailto:hi@mintlify.com"
+        "href": "mailto:rishabkoul2001@gmail.com"
       }
     ],
     "primary": {
       "type": "button",
-      "label": "Dashboard",
-      "href": "https://dashboard.mintlify.com"
-    }
-  },
-  "footer": {
-    "socials": {
-      "x": "https://x.com/mintlify",
-      "github": "https://github.com/mintlify",
-      "linkedin": "https://linkedin.com/company/mintlify"
+      "label": "Try it now",
+      "href": "https://rapidapi.com/rishabkoul2001/api/renderbots-html-to-file-api"
     }
   }
 }
