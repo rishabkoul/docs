@@ -1,0 +1,135 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "RenderBot's HTML to File API",
+    "description": "API for converting HTML and CSS content into various file formats.",
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "https://renderbots-html-to-file-api.p.rapidapi.com"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "rapidapi_key": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "x-rapidapi-key"
+      }
+    }
+  },
+  "security": [
+    {
+      "rapidapi_key": []
+    }
+  ],
+  "paths": {
+    "/api/generate-file": {
+      "post": {
+        "summary": "Generate File",
+        "description": "Convert HTML and CSS content into an image or PDF.",
+        "security": [
+          {
+            "rapidapi_key": []
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "html": {
+                    "type": "string",
+                    "description": "HTML content to convert."
+                  },
+                  "css": {
+                    "type": "string",
+                    "description": "Optional CSS styles to apply."
+                  },
+                  "width": {
+                    "type": "integer",
+                    "description": "Width of the output image (not applicable for PDFs).",
+                    "default": 800
+                  },
+                  "height": {
+                    "type": "integer",
+                    "description": "Height of the output image (not applicable for PDFs).",
+                    "default": 600
+                  },
+                  "format": {
+                    "type": "string",
+                    "description": "Desired output format (e.g., png, jpeg, jpg, webp, avif, tiff, pdf, svg).",
+                    "default": "png"
+                  },
+                  "imageQuality": {
+                    "type": "integer",
+                    "description": "Quality setting for jpeg, jpg, and webp, avif, tiff formats (0 to 100).",
+                    "default": 100
+                  },
+                  "pdfProps": {
+                    "type": "object",
+                    "properties": {
+                      "format": {
+                        "type": "string",
+                        "description": "PDF format (e.g., A4, Letter, Legal).",
+                        "default": "A4"
+                      },
+                      "width": {
+                        "type": "string",
+                        "description": "Width in inches (e.g., \"8.5in\").",
+                        "nullable": true
+                      },
+                      "height": {
+                        "type": "string",
+                        "description": "Height in inches (e.g., \"11in\").",
+                        "nullable": true
+                      }
+                    }
+                  },
+                  "returnBase64": {
+                    "type": "boolean",
+                    "description": "Return the file as a Base64 string.",
+                    "default": false
+                  },
+                  "filename": {
+                    "type": "string",
+                    "description": "Desired filename for the output.",
+                    "default": "output"
+                  }
+                },
+                "example": {
+                  "html": "<div>Hello World</div>",
+                  "css": "div { width: 100%; height: 100%; background-color: red; display: flex; justify-content: center; align-items: center; color: white; }",
+                  "format": "png",
+                  "returnBase64": true
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "image": {
+                      "type": "string",
+                      "description": "Base64-encoded image string (if returnBase64 is true).",
+                      "example": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAyAAAAJYCAIAAAAVFBUnAAAAAXNSR0IArs4c6QAAD/JJREFUeJzt3E3IpmXdwOH/jKJFUhQRRKlThiLoxlAKEsZaSCpZmIvQPhQEyamkhRuDshDBFg1ZMURUppU6mTrj19SA0qLsA/s0owTLKdpYmg1ihl3vYh56dN4ZnfSnvvYeB9fiuc/7us/75Fn9OK+Te82yLAMAQGft870AAID/NgILACAmsAAAYgILACAmsAAAYgILACAmsAAAYvvv9Z01a57ThQAAvODs5fdE7WABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABAMQEFgBATGABz6GjjppNm2ZZZt26mZkPfnB++9v56left/W8/e3zne/M73+/+/hBB81FF83OnXPuuc/PwoAXOIEF/Of2228uvXR27JgHHpiNG+cVr5iZOeWUuemmWZa56aY55ZQ9f/BXv5rPfW715Re+ML/4xb5+6WteM9deO8syW7bMe9+7Ov7a167+ffLJs2nT/O1v8+EP79Oct9wyW7bsYXznzvn4x+fBB/d1bQBPtP/zvQDgBeixx+aCC+bww2fdujn//JXBG2+cnTvnpJPm05+e22/vv/RPf5qzzpqTT55f/nKuuGJ1/PLLZ8OGufvumZmbbpqZOfDA+exn+wUA7DM7WMALx0MPzbZt8+53r44ceuiccMK8732rI+9852ze3Hzdv/7VzAP8/yOwgGfN618/N9441147P/jBPh1met3rZsuWufnm2bJlNm+eV796D/dcc80cfvgcffTKyw98YB56aM44Y9asmZlZu3aOP362b5+Zedvb5vbb54Yb5rvfnUsvnQMPnJm58MJZljnjjPnSl/Zw9GpmPvKRufPOueGG+eY3Vx59AvznBBbw7FizZq6/frZtm9NOm9NPn8sum+OOe4qPXH313HnnnHTSvOMdc999c/31e7hny5Z55JGVTaw1a+b00+dDH5qDD57162dm3vzm+eEP59FH51WvmhtumE98Yk49dU4+eY4/fj75yZmZiy+emXnTm+Yzn1npsMc75ZS5+OI57bQ59dR5z3ucwQKeNoEFPANveMPcfvvqtXHj6lvHHDNHHz3f/vbMzB//OPfeOyee+GRTHXPMHHvs6uGqL395jjtujjlm99v+/vfVp4Tr189PfzpXXTX337/ylPBd71p5PnjmmfPAAytHwR59dK688glbaNu2zV13zYYNu09+7rlz881z771P+/8BsItD7sAzcM89K1tHu6xfP7fdtvL3oYfOzGzcOI89NruOTz388JNNddhhMzN//vPKy/vum10PGe+8c/c7r7lmvv71OfLIOfvs+cpX5p//nKuumve/f847b9avnwsvXJnt31Ptmu2lL51XvnLuv3918JFHdp/58MNXihDgmRFYwLPpnHP29UHbssyup367rF27OribXU8Jzzpr3vjGlY2rr31tNmyYj31s7r57/vGPlQ/+e6onn+3xDjjAwXYg4REh8OzYsWNm5ogj9vX+e+6ZmdWD7Yccsjq4m50759Zb56Mfnc2bV5rpxz+eu++eCy6Yb31rdbbHn5E/5JB58MH5y1+ees27NtIAnhmBBTw7fvKT+c1v5lOfmpe8ZHZtTR1wwJPd/7OfzR13rP6C6Nlnzx13zM9/vuebr7lm1q6dyy9fHbniinn44dm2beXllVfOy142J5wwu/alzjxzNm166jV/4xtz6qlz7LEzMy9+8exvjx94upa9mXG5XK49X/vtt1x00fKHPyx//etyySXLy1++zCwnnrhcd92yLMt11y0nnrjMLIcdttx22/LAA8uvf71s3rwcfPBy1FHLF7+4LMty2WXLEUcs5523/O53y113Leecs8ws69YtW7cut966bN++bN26rFu31wUcdNBy881PGDn44OWKK54w8ta3Lt/73rJ16/L97y+f//zyohctM8v55y/Lslx99fKWtywzy0knLdu3Lw89tFx44XLQQct++y2XXLLs2LHcc89yyy3Ljh3Lj360HHnk8/8Pd7lc/2evvViz7O1QwuOPLwAA8L/tpaM8IgQAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAICYwAIAiAksAIDY/nt9Z1me04UAAPy3sIMFABATWAAAMYEFABATWAAAMYEFABATWAAAMYEFABD7H1Y9zA1ZPHQGAAAAAElFTkSuQmCC"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
