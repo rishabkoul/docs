@@ -13,7 +13,7 @@
       "dark": "#061930"
     }
   },
-  "favicon": "/render_bot_logo_favicon.png",
+  "favicon": "/render_bot_logo_favicon.png?",
   "navigation": {
     "tabs": [
       {
